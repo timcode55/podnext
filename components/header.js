@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import PodList from "./podList";
 import Filter from "./filter";
 import { array1, array2, categoriesArray } from "../utils/category-list";
-// import { PodcastContext } from "../context/podcastContext";
+// import PodcastContext from "../store/podcastContext";
 import classes from "./header.module.css";
 
 const Header = (props) => {
+  //   const podcastCtx = useContext(PodcastContext);
   //   const [state, setState] = useContext(PodcastContext);
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");

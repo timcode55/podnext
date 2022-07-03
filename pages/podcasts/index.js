@@ -1,10 +1,13 @@
-// import PodList from "../../components/podList";
+// import { useContext } from "react";
+// import PodcastContext from "../../store/podcastContext";
 import Header from "../../components/header";
 import classes from "./podcasts.module.css";
 
 function Podcasts(props) {
   const { podcasts } = props;
   console.log(props, "PROPS FROM GSP");
+  // const podcastCtx = useContext(PodcastContext);
+  // console.log(podcastCtx, "PODCASTCTX");
   return (
     <div className={classes.mainContainer}>
       {/* <ul>
