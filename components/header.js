@@ -2,28 +2,33 @@ import React, { useState, useContext } from "react";
 import PodList from "./podList";
 import Filter from "./filter";
 import { array1, array2, categoriesArray } from "../utils/category-list";
-// import PodcastContext from "../store/podcastContext";
+import PodcastContext from "../store/podcastContext";
 import classes from "./header.module.css";
 
 const Header = (props) => {
-  //   const podcastCtx = useContext(PodcastContext);
+  const podcastCtx = useContext(PodcastContext);
+  console.log(podcastCtx, "PODCASTCTX IN HEADER");
   //   const [state, setState] = useContext(PodcastContext);
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    setState({ page: 1, category: e.target.value });
+    // setState({ page: 1, category: e.target.value });
     let findValue = Number(e.target.value);
-    let findCategory = categoriesArray.find(
+    let findCategoryName = categoriesArray.find(
       (item) => item.id === findValue
     ).name;
-    setCategory(findCategory);
-    if (props.cache[0][`${e.target.value}`]) {
-      props.renderCache(e.target.value);
-    } else {
-      props.getApiData(e.target.value, 1);
-    }
+    let findCategoryId = categoriesArray.find(
+      (item) => item.id === findValue
+    ).id;
+    setCategory(findCategoryName, findCategoryId);
+    podcastCtx.setCategory(findCategoryName, findCategoryId);
+    // if (props.cache[0][`${e.target.value}`]) {
+    //   props.renderCache(e.target.value);
+    // } else {
+    //   props.getApiData(e.target.value, 1);
+    // }
   };
 
   return (
@@ -65,7 +70,7 @@ const Header = (props) => {
                 <select
                   id="selection2"
                   name="scripts"
-                  //   onChange={handleChange}
+                  onChange={handleChange}
                   className={classes.selection}
                 >
                   {array2.map((item) => {

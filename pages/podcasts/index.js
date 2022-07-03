@@ -1,13 +1,12 @@
-// import { useContext } from "react";
-// import PodcastContext from "../../store/podcastContext";
+import { useContext } from "react";
+import PodcastContext from "../../store/podcastContext";
 import Header from "../../components/header";
 import classes from "./podcasts.module.css";
 
 function Podcasts(props) {
   const { podcasts } = props;
   console.log(props, "PROPS FROM GSP");
-  // const podcastCtx = useContext(PodcastContext);
-  // console.log(podcastCtx, "PODCASTCTX");
+  const podcastCtx = useContext(PodcastContext);
   return (
     <div className={classes.mainContainer}>
       {/* <ul>
@@ -29,7 +28,7 @@ export async function getServerSideProps() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "X-ListenAPI-Key": process.env.LISTEN_NOTES_API_KEY,
+        "X-ListenAPI-Key": process.env.NEXT_PUBLIC_LISTEN_NOTES_API_KEY,
       },
       credentials: "same-origin",
     }

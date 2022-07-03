@@ -1,34 +1,42 @@
-// import { createContext, useState } from "react";
+import { createContext, useState } from "react";
 
-// const PodcastContext = createContext({
-//   podcasts: [{ title: "The Joe Rogan Podcast", rating: 4 }],
-//   setCategory: function () {},
-//   showLoader: false,
-// });
+const PodcastContext = createContext({
+  podcasts: [],
+  setCategory: function () {},
+  showLoader: false,
+});
 
-// export function PodcastContextProvider(props) {
-//   const [category, setCategory] = useState(null);
-//   const [loader, setLoader] = useState(null);
+export function PodcastContextProvider(props) {
+  const [podcasts, setPodcasts] = useState([]);
+  const [category, setCategory] = useState(null);
+  const [loader, setLoader] = useState(null);
 
-//   function setCategoryHandler(category) {
-//     setCategory({ page: 1, category: 67 });
-//   }
+  function setCategoryHandler(categoryName, categoryId) {
+    console.log(category, "CATEGORY IN setCategoryHandler");
+    setCategory({ page: 1, category: categoryName, id: categoryId });
+  }
 
-//   function setLoaderHandler(isLoading) {
-//     setLoader(isLoading);
-//   }
+  function setPodcastsHandler(podcasts) {
+    setPodcasts(podcasts);
+  }
 
-//   const context = {
-//     podcasts,
-//     setCategory: setCategoryHandler,
-//     showLoader: setLoaderHandler,
-//   };
+  function setLoaderHandler(isLoading) {
+    setLoader(isLoading);
+  }
 
-//   return (
-//     <PodcastContext.Provider value={context}>
-//       {props.children}
-//     </PodcastContext.Provider>
-//   );
-// }
+  const context = {
+    podcasts: podcasts,
+    category: category,
+    setCategory: setCategoryHandler,
+    showLoader: setLoaderHandler,
+    setPodcasts: setPodcastsHandler,
+  };
 
-// export default PodcastContext;
+  return (
+    <PodcastContext.Provider value={context}>
+      {props.children}
+    </PodcastContext.Provider>
+  );
+}
+
+export default PodcastContext;
