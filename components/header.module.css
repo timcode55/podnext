@@ -1,0 +1,28 @@
+.headerContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  margin-top: 30px;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 3em;
+}
+
+.selectionBoxContainer {
+  display: flex;
+}
+
+.selectionBox {
+  margin: 0 50px;
+}
+
+.selection {
+  background-color: white;
+  height: 30px;
+  font-size: 1em;
+}

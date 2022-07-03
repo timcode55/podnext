@@ -1,7 +1,11 @@
-import '../styles/globals.css'
+import { PodcastContextProvider } from "../store/podcastContext";
+import "../styles/globals.css";
+// import { PodcastContext } from "../context";
 
 function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+  <PodcastContextProvider>
+    <Component {...pageProps} />;
+  </PodcastContextProvider>;
 }
 
-export default MyApp
+export default MyApp;
