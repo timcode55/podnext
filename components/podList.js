@@ -2,17 +2,16 @@ import { useContext } from "react";
 import PodCard from "./podCard";
 import classes from "./podList.module.css";
 import PodcastContext from "../store/podcastContext";
-import { getPodcasts } from "../helpers/api-util";
 
 // import Arrow from "../arrow/Arrow";
 
 const PodList = (props) => {
-  const PodcastCtx = useContext(PodcastContext);
-  console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
-  console.log(props, "props in podlist");
-  // console.log(getPodcasts(67, 1), "getPODCASTS UTIL TEST");
-  let podcasts = getPodcasts(68, 1);
-  PodcastCtx.setPodcasts(podcasts);
+  // const PodcastCtx = useContext(PodcastContext);
+  // console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
+  // console.log(props, "props in podlist");
+  // // console.log(getPodcasts(67, 1), "getPODCASTS UTIL TEST");
+  // let podcasts = getPodcasts(68, 1);
+  // PodcastCtx.setPodcasts(podcasts);
   return (
     <div className={classes.outerContainer}>
       <div className={classes.container}>

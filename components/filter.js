@@ -1,7 +1,12 @@
 import classes from "./filter.module.css";
 import { array1, array2, categoriesArray } from "../utils/category-list";
 
-const Filter = () => {
+const Filter = ({
+  handleRatingInput,
+  handleNumberRatingsInput,
+  handleGenreInput,
+  handleClick,
+}) => {
   return (
     <div className={classes.filterContainer}>
       <form className={classes.formWrapper}>
@@ -13,7 +18,7 @@ const Filter = () => {
               type="text"
               name="rating"
               //   value={rating}
-              //   onChange={handleRatingInput}
+              onChange={handleRatingInput}
             />
           </label>
         </div>
@@ -25,18 +30,14 @@ const Filter = () => {
               type="text"
               name="numberRatings"
               //   value={numberRatings}
-              //   onChange={handleNumberRatingsInput}
+              onChange={handleNumberRatingsInput}
             />
           </label>
         </div>
         <div className={classes.filterSelection}>
           <label>
             <p>Genre</p>
-            <select
-              id="selection"
-              name="scripts"
-              // onChange={handleGenreInput}
-            >
+            <select id="selection" name="scripts" onChange={handleGenreInput}>
               {categoriesArray.map((item) => {
                 return (
                   <option key={item.id} value={item.name}>
@@ -51,7 +52,7 @@ const Filter = () => {
           <button
             className={classes.filterButton}
             type="submit"
-            //   onClick={handleClick}
+            onClick={handleClick}
           >
             Submit
           </button>
