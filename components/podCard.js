@@ -1,5 +1,5 @@
-// import icons8 from "../../images/Hashtag-26-52px/icons8-hashtag-52.png";
-// import rating from "../../images/Star-24-48px/icons8-star-48.png";
+import icons8 from "../public/icons8-hashtag-52.png";
+import rating from "../public/icons8-star-48.png";
 import classes from "./podCard.module.css";
 
 const PodCard = (props) => {
@@ -32,6 +32,27 @@ const PodCard = (props) => {
             <button className={classes.webButton}>iTunes Link</button>
           </a>
           {/* </div> */}
+        </div>
+
+        <div className="contratings">
+          <div>
+            <img
+              className={classes.ratingimage}
+              src={icons8}
+              alt="ratingimage"
+            />
+            <p className={classes.ratingtext}># of Ratings</p>
+            <p className={classes.ratingtext}>{podcast.numberOfRatings}</p>
+          </div>
+          <div>
+            <img
+              className={classes.ratingimage}
+              src={rating}
+              alt="ratingimage"
+            />
+            <p className={classes.ratingtext}>iTunes Rating</p>
+            <p className={classes.ratingtext}>{podcast.rating}</p>
+          </div>
         </div>
       </div>
     </div>

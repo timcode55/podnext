@@ -6,8 +6,8 @@ import PodcastContext from "../store/podcastContext";
 // import Arrow from "../arrow/Arrow";
 
 const PodList = (props) => {
-  // const PodcastCtx = useContext(PodcastContext);
-  // console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
+  const PodcastCtx = useContext(PodcastContext);
+  console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
   // console.log(props, "props in podlist");
   // // console.log(getPodcasts(67, 1), "getPODCASTS UTIL TEST");
   // let podcasts = getPodcasts(68, 1);
@@ -16,8 +16,8 @@ const PodList = (props) => {
     <div className={classes.outerContainer}>
       <div className={classes.container}>
         <div className={classes.podcastDisplay}>
-          {props.podcasts.data.podcasts ? (
-            props.podcasts.data.podcasts.map((pod) => (
+          {PodcastCtx.recommend ? (
+            PodcastCtx.recommend.map((pod) => (
               // <li key={pod.id}>{pod.title}</li>
               <PodCard key={pod.id} podcast={pod} />
             ))

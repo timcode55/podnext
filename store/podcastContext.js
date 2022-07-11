@@ -9,6 +9,7 @@ const PodcastContext = createContext({
 export function PodcastContextProvider(props) {
   const [podcasts, setPodcasts] = useState([]);
   const [category, setCategory] = useState(null);
+  const [recommend, setRecommend] = useState(null);
   const [loader, setLoader] = useState(null);
 
   function setCategoryHandler(categoryName, categoryId) {
@@ -24,12 +25,18 @@ export function PodcastContextProvider(props) {
     setLoader(isLoading);
   }
 
+  function setRecommendHandler(podcasts) {
+    setRecommend(podcasts);
+  }
+
   const context = {
     podcasts: podcasts,
     category: category,
+    recommend: recommend,
     setCategory: setCategoryHandler,
     showLoader: setLoaderHandler,
     setPodcasts: setPodcastsHandler,
+    setRecommend: setRecommendHandler,
   };
 
   return (
