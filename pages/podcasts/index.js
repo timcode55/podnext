@@ -21,7 +21,7 @@ function Podcasts(props) {
   );
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const response = await fetch(
     `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${67}&page=${1}&region=us&safe_mode=0`,
     {
@@ -37,7 +37,7 @@ export async function getServerSideProps() {
   console.log(data, "DATA IN API CALL");
 
   // Pass data to the page via props
-  return { props: { data } };
+  return { props: { data }, revalidate: 86400 };
 }
 
 export default Podcasts;

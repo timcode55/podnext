@@ -65,9 +65,6 @@ const Filter = () => {
           response.data.sort((a, b) => (a.rating > b.rating ? 1 : -1)),
           "*********************response.data 29 in Header"
         );
-        // setTopPodcasts(
-        //   response.data.sort((a, b) => (a.rating > b.rating ? 1 : -1))
-        // );
         podcastCtx.setRecommend(recommendedPodcasts);
         setRating("");
         setNumberRatings("");
@@ -86,7 +83,7 @@ const Filter = () => {
               className={classes.filterInput}
               type="text"
               name="rating"
-              //   value={rating}
+              value={rating}
               onChange={handleRatingInput}
             />
           </label>
@@ -98,7 +95,7 @@ const Filter = () => {
               className={classes.filterInput}
               type="text"
               name="numberRatings"
-              //   value={numberRatings}
+              value={numberRatings}
               onChange={handleNumberRatingsInput}
             />
           </label>

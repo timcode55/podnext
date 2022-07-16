@@ -7,12 +7,13 @@ import classes from "./header.module.css";
 import axios from "axios";
 
 const Header = (props) => {
+  console.log(props, "props in header");
   const [state, setState] = useContext(PodcastContext);
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
-  const [topPodcasts, setTopPodcasts] = useState(null);
+  const [podcasts, setPodcasts] = useState(props.podcasts.data.podcasts);
   const [genre, setGenre] = useState("AI & Data Science");
   const [loader, setLoader] = useState(true);
   const [dbCategories, setDbCategories] = useState([]);
@@ -24,15 +25,35 @@ const Header = (props) => {
     setValue(e.target.value);
     // setState({ page: 1, category: e.target.value });
     let findValue = Number(e.target.value);
-    let findCategoryName = categoriesArray.find(
+    let categoryName = categoriesArray.find(
       (item) => item.id === findValue
     ).name;
-    let findCategoryId = categoriesArray.find(
-      (item) => item.id === findValue
-    ).id;
-    setCategory(findCategoryName, findCategoryId);
-    podcastCtx.setCategory(findCategoryName, findCategoryId);
+    let categoryId = categoriesArray.find((item) => item.id === findValue).id;
+    setCategory(categoryName, categoryId);
+    podcastCtx.setCategory(categoryName, categoryId);
+    getNewPodcasts(categoryId);
   };
+
+  async function getNewPodcasts(categoryId) {
+    const response = await fetch(
+      `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${categoryId}&page=${1}&region=us&safe_mode=0`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "X-ListenAPI-Key": process.env.NEXT_PUBLIC_LISTEN_NOTES_API_KEY,
+        },
+        credentials: "same-origin",
+      }
+    );
+    const data = await response.json();
+    console.log(data, "DATA IN select box change");
+    podcastCtx.setPodcasts(data.podcasts);
+    setPodcasts(data.podcasts);
+
+    // Pass data to the page via props
+    return data;
+  }
 
   return (
     <div>
@@ -93,11 +114,11 @@ const Header = (props) => {
           </div>
         </div>
         <div className={classes.filterWrapper}>
-          <Filter handleClick={handleClick} />
+          {/* <Filter handleClick={handleClick} /> */}
         </div>
       </div>
       <PodList
-        podcasts={props.podcasts}
+        podcasts={podcasts}
         category={parseInt(value)}
         getData={props.getApiData}
         status={props.status}

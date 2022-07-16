@@ -1,5 +1,6 @@
 import icons8 from "../public/icons8-hashtag-52.png";
 import rating from "../public/icons8-star-48.png";
+import Image from "next/image";
 import classes from "./podCard.module.css";
 
 const PodCard = (props) => {
@@ -34,9 +35,9 @@ const PodCard = (props) => {
           {/* </div> */}
         </div>
 
-        <div className="contratings">
+        <div className={classes.contratings}>
           <div>
-            <img
+            <Image
               className={classes.ratingimage}
               src={icons8}
               alt="ratingimage"
@@ -45,7 +46,7 @@ const PodCard = (props) => {
             <p className={classes.ratingtext}>{podcast.numberOfRatings}</p>
           </div>
           <div>
-            <img
+            <Image
               className={classes.ratingimage}
               src={rating}
               alt="ratingimage"

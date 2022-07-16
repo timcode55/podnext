@@ -12,7 +12,7 @@ export default function Recommend() {
     <div className={classes.mainContainer}>
       <h1>Recommend Page</h1>
       <Filter />
-      <PodList data={PodcastContext.recommend} />
+      {podcastCtx.recommend && <PodList podcasts={podcastCtx.recommend} />}
     </div>
   );
 }
