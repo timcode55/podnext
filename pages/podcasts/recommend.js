@@ -3,10 +3,16 @@ import Filter from "../../components/filter";
 import PodList from "../../components/podList";
 import classes from "./recommend.module.css";
 import PodcastContext from "../../store/podcastContext";
+// import dbConnect from "../../utils/mongodb";
+// import Rating from "../../models/Rating";
+import { MongoClient } from "mongodb";
 
-export default function Recommend() {
+export default function Recommend(props) {
+  console.log(props, "props in recoomend from DB");
   const podcastCtx = useContext(PodcastContext);
   console.log(podcastCtx, "PODCASTCTX IN recommend.js");
+  // connectDB();
+  // dbConnect();
 
   return (
     <div className={classes.mainContainer}>
@@ -15,4 +21,20 @@ export default function Recommend() {
       {podcastCtx.recommend && <PodList podcasts={podcastCtx.recommend} />}
     </div>
   );
+}
+
+export async function getStaticProps() {
+  const client = await MongoClient.connect(process.env.NEXT_PUBLIC_DATABASE);
+
+  const db = client.db();
+
+  const yourCollection = db.collection("Rating");
+
+  const yourData = await yourCollection.find().toArray();
+
+  client.close();
+
+  return {
+    props: {},
+  };
 }

@@ -12,7 +12,6 @@ export const categoriesArray = [
   { id: 150, name: "Chinese History", parent_id: 125 },
   { id: 151, name: "Locally Focused", parent_id: 67 },
   { id: 154, name: "San Francisco Bay Area", parent_id: 152 },
-  { id: 155, name: "Denver", parent_id: 152 },
   { id: 157, name: "Startup", parent_id: 93 },
   { id: 158, name: "NFL", parent_id: 78 },
   { id: 159, name: "Harry Potter", parent_id: 68 },

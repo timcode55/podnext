@@ -2,6 +2,7 @@ import { useContext } from "react";
 import PodcastContext from "../../store/podcastContext";
 import Header from "../../components/header";
 import classes from "./podcasts.module.css";
+// import { connectToDatabase } from "../../utils/mongodb";
 
 function Podcasts(props) {
   const { podcasts } = props;
@@ -21,7 +22,7 @@ function Podcasts(props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const response = await fetch(
     `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${67}&page=${1}&region=us&safe_mode=0`,
     {
@@ -36,8 +37,13 @@ export async function getStaticProps() {
   const data = await response.json();
   console.log(data, "DATA IN API CALL");
 
+  // const { client } = await connectToDatabase();
+  // client.connect();
+
+  // const isConnected = await client.isConnected(); // Returns true or false
+
   // Pass data to the page via props
-  return { props: { data }, revalidate: 86400 };
+  return { props: { data } };
 }
 
 export default Podcasts;

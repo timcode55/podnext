@@ -1,13 +1,14 @@
 import { PodcastContextProvider } from "../store/podcastContext";
 import "../styles/globals.css";
-// import { PodcastContext } from "../context";
+
+import Head from "next/head";
 
 function MyApp({ Component, pageProps }) {
-  // <PodcastContextProvider>
-  //   <Component {...pageProps} />;
-  // </PodcastContextProvider>;
   return (
     <PodcastContextProvider>
+      <Head>
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+      </Head>
       <Component {...pageProps} />
     </PodcastContextProvider>
   );

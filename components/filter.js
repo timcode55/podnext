@@ -3,8 +3,14 @@ import PodcastContext from "../store/podcastContext";
 import { categoriesArray } from "../utils/category-list";
 import { useState, useContext } from "react";
 import axios from "axios";
+// import { connectToDatabase } from "../utils/mongodb";
 
-const Filter = () => {
+import Rating from "../db/Rating";
+// import connectDB from "../db/mongoose";
+// import { Rating } from "../models/Rating";
+
+const Filter = (props) => {
+  console.log(props, "PROPS IN FILTER FROM GSSP");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
   const [topPodcasts, setTopPodcasts] = useState(null);
@@ -48,6 +54,7 @@ const Filter = () => {
     let stringGenre = encodeURIComponent(genre);
     console.log(stringGenre, "stringGenre");
     e.preventDefault();
+    // connectToDatabase();
     await axios
       .post(
         `http://localhost:8000/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
@@ -72,6 +79,32 @@ const Filter = () => {
       .catch(function (error) {
         console.log(error);
       });
+    // async function addTest(req, res) {
+    //   try {
+    //     console.log("CONNECTING TO MONGO");
+    //     await clientPromise;
+    //     console.log("CONNECTED TO MONGO");
+
+    //     console.log("CREATING DOCUMENT");
+    //     const test = await Test.create(req.body);
+    //     console.log("CREATED DOCUMENT");
+
+    //     res.json({ test });
+    //   } catch (error) {
+    //     console.log(error);
+    //     res.json({ error });
+    //   }
+    // }
+
+    // addTest();
+    // const topPodcasts = await Rating.find({
+    //   rating: { $gte: rating },
+    //   numberOfRatings: { $gte: numberRatings },
+    //   listenNotesGenre: genre,
+    //   // genre
+    // }).lean();
+
+    // console.log(topPodcasts, "TOPPODCASTS FROM DB IN FILTER*****");
   };
   return (
     <div className={classes.filterContainer}>
