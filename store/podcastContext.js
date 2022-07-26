@@ -11,6 +11,9 @@ export function PodcastContextProvider(props) {
   const [category, setCategory] = useState(null);
   const [recommend, setRecommend] = useState(null);
   const [loader, setLoader] = useState(null);
+  const [rating, setRating] = useState(null);
+  const [numberRatings, setNumberRatings] = useState(null);
+  const [genre, setGenre] = useState(null);
 
   function setCategoryHandler(categoryName, categoryId) {
     console.log(category, "CATEGORY IN setCategoryHandler");
@@ -29,14 +32,32 @@ export function PodcastContextProvider(props) {
     setRecommend(podcasts);
   }
 
+  function setRatingHandler(rating) {
+    setRating(rating);
+  }
+
+  function setNumberRatingsHandler(numberRatings) {
+    setNumberRatings(numberRatings);
+  }
+
+  function setGenreHandler(genre) {
+    setGenre(genre);
+  }
+
   const context = {
     podcasts: podcasts,
     category: category,
     recommend: recommend,
+    rating,
+    numberRatings,
+    genre,
     setCategory: setCategoryHandler,
     showLoader: setLoaderHandler,
     setPodcasts: setPodcastsHandler,
     setRecommend: setRecommendHandler,
+    setRating: setRatingHandler,
+    setNumberRatings: setNumberRatingsHandler,
+    setGenre: setGenreHandler,
   };
 
   return (

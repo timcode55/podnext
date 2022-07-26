@@ -42,23 +42,23 @@ const PodList = (props) => {
   );
 };
 
-export async function getServerSideProps() {
-  const response = await fetch(
-    `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${67}&page=${1}&region=us&safe_mode=0`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-        "X-ListenAPI-Key": process.env.LISTEN_NOTES_API_KEY,
-      },
-      credentials: "same-origin",
-    }
-  );
-  const data = await response.json();
-  console.log(data, "DATA IN API CALL");
+// export async function getServerSideProps() {
+//   const response = await fetch(
+//     `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${67}&page=${1}&region=us&safe_mode=0`,
+//     {
+//       method: "GET",
+//       headers: {
+//         "Content-Type": "application/json",
+//         "X-ListenAPI-Key": process.env.LISTEN_NOTES_API_KEY,
+//       },
+//       credentials: "same-origin",
+//     }
+//   );
+//   const data = await response.json();
+//   console.log(data, "DATA IN API CALL");
 
-  // Pass data to the page via props
-  return { props: { data } };
-}
+//   // Pass data to the page via props
+//   return { props: { data } };
+// }
 
 export default PodList;

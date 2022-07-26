@@ -13,7 +13,8 @@ const Header = (props) => {
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
-  const [podcasts, setPodcasts] = useState(props.podcasts.data.podcasts);
+  // const [podcasts, setPodcasts] = useState(props.podcasts.data.podcasts);
+  const [podcasts, setPodcasts] = useState(null);
   const [genre, setGenre] = useState("AI & Data Science");
   const [loader, setLoader] = useState(true);
   const [dbCategories, setDbCategories] = useState([]);

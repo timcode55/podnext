@@ -5,7 +5,7 @@ import { useState, useContext } from "react";
 import axios from "axios";
 // import { connectToDatabase } from "../utils/mongodb";
 
-import Rating from "../db/Rating";
+// import Rating from "../db/Rating";
 // import connectDB from "../db/mongoose";
 // import { Rating } from "../models/Rating";
 
@@ -35,16 +35,23 @@ const Filter = (props) => {
   const handleRatingInput = (e) => {
     e.preventDefault();
     setRating(e.target.value);
+    // podcastCtx.setRating(e.target.value);
   };
   const handleNumberRatingsInput = (e) => {
     e.preventDefault();
     setNumberRatings(e.target.value);
+    // podcastCtx.setNumberRatings(e.target.value);
   };
 
   const handleGenreInput = (e) => {
     e.preventDefault();
     console.log(e.target.value, "VALUE IN SELECT BOX IN GENRE 71**");
     setGenre(e.target.value);
+    // if (!e.target.value) {
+    //   podcastCtx.setGenre("AI & Data Science");
+    // } else {
+    //   podcastCtx.setGenre(e.target.value);
+    // }
   };
 
   const handleClick = async (e) => {
@@ -54,10 +61,9 @@ const Filter = (props) => {
     let stringGenre = encodeURIComponent(genre);
     console.log(stringGenre, "stringGenre");
     e.preventDefault();
-    // connectToDatabase();
-    await axios
-      .post(
-        `http://localhost:8000/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
+    axios
+      .get(
+        `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
         {
           body: {
             todo: { rating },
@@ -65,20 +71,45 @@ const Filter = (props) => {
         }
       )
       .then(function (response) {
-        const recommendedPodcasts = response.data.sort((a, b) =>
+        let result = response.data.data.sort((a, b) =>
           a.rating > b.rating ? 1 : -1
         );
-        console.log(
-          response.data.sort((a, b) => (a.rating > b.rating ? 1 : -1)),
-          "*********************response.data 29 in Header"
-        );
-        podcastCtx.setRecommend(recommendedPodcasts);
-        setRating("");
-        setNumberRatings("");
+        console.log(result, "RESULT");
+        // response.data,
+
+        // setTopPodcasts(response.data);
+        podcastCtx.setRecommend(result);
+        // setRating("");
+        // setNumberRatings("");
       })
       .catch(function (error) {
-        console.log(error);
+        console.log(error, "ERROR IN FILTER.JS");
       });
+    // connectToDatabase();
+    // await axios
+    //   .post(
+    //     `http://localhost:8000/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
+    //     {
+    //       body: {
+    //         todo: { rating },
+    //       },
+    //     }
+    //   )
+    //   .then(function (response) {
+    //     const recommendedPodcasts = response.data.sort((a, b) =>
+    //       a.rating > b.rating ? 1 : -1
+    //     );
+    //     console.log(
+    //       response.data.sort((a, b) => (a.rating > b.rating ? 1 : -1)),
+    //       "*********************response.data 29 in Header"
+    //     );
+    //     podcastCtx.setRecommend(recommendedPodcasts);
+    //     setRating("");
+    //     setNumberRatings("");
+    //   })
+    //   .catch(function (error) {
+    //     console.log(error);
+    //   });
     // async function addTest(req, res) {
     //   try {
     //     console.log("CONNECTING TO MONGO");

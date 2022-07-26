@@ -1,12 +1,12 @@
-import mongoose from "mongoose";
+// import mongoose from "mongoose";
 
-const connectDB = async () => {
-  const db = await mongoose.connect(process.env.DATABASE, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+// const connectDB = async () => {
+//   const db = await mongoose.connect(process.env.DATABASE, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+//   });
 
-  console.log("DB connection was successful!");
-};
-// test
-export default connectDB;
+//   console.log("DB connection was successful!");
+// };
+// // test
+// export default connectDB;

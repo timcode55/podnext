@@ -1,13 +1,35 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import PodcastContext from "../../store/podcastContext";
 import Header from "../../components/header";
 import classes from "./podcasts.module.css";
-// import { connectToDatabase } from "../../utils/mongodb";
+import { MongoClient } from "mongodb";
+import axios from "axios";
 
 function Podcasts(props) {
-  const { podcasts } = props;
+  // const { podcasts } = props;
   console.log(props, "PROPS FROM GSP");
   const podcastCtx = useContext(PodcastContext);
+  const [podcastsRatings, setPodcastRatings] = useState(props.podcasts);
+
+  const getRating = async () => {
+    for (let pod of props.data.podcasts) {
+      const id = pod.id;
+      await axios
+        .get(`/api/getRatings/?id=${id}`)
+        .then(function (response) {
+          pod["rating"] = response.data.rating;
+          pod["numberOfRatings"] = response.data.numberOfRatings || "N/A";
+          pod["itunes"] = response.data.itunes;
+          // pod['description'] = response.data.description;
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+    console.log(getRating, "GETRATING RESULTS FROM DB");
+    await setPodcastRatings([props.data.podcasts]);
+  };
+  getRating();
   return (
     <div className={classes.mainContainer}>
       {/* <ul>
@@ -17,7 +39,7 @@ function Podcasts(props) {
           ))}
         </ul>
       </ul> */}
-      <Header podcasts={props} />
+      <Header podcasts={podcastsRatings} />
     </div>
   );
 }
@@ -37,12 +59,14 @@ export async function getServerSideProps() {
   const data = await response.json();
   console.log(data, "DATA IN API CALL");
 
-  // const { client } = await connectToDatabase();
-  // client.connect();
+  const client = await MongoClient.connect(process.env.NEXT_PUBLIC_DATABASE);
+  const db = client.db();
 
-  // const isConnected = await client.isConnected(); // Returns true or false
+  const yourCollection = db.collection("Rating");
 
-  // Pass data to the page via props
+  const yourData = await yourCollection.find().toArray();
+
+  client.close();
   return { props: { data } };
 }
 
