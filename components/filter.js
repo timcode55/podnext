@@ -62,7 +62,7 @@ const Filter = (props) => {
     console.log(stringGenre, "stringGenre");
     e.preventDefault();
     const topPods = axios.get(
-      `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
+      `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${stringGenre}`,
       {
         method: "GET",
         headers: {
@@ -76,9 +76,11 @@ const Filter = (props) => {
     console.log(data, "data from api call");
 
     let result = data.data.data.sort((a, b) => {
-      a.rating > b.rating ? 1 : -1;
+      return b.rating - a.rating;
     });
-    console.log(result, "RESULT");
+    console.log(result, "RESULT in Filter after sort");
+    setNumberRatings("");
+    setRating("");
     // response.data,
 
     // setTopPodcasts(response.data);

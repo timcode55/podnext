@@ -8,6 +8,9 @@ export default async function handler(req, res) {
   console.log(typeof req.query.numberRatings, "TYPEOF req.query.genre");
   console.log(req.query.genre, "req.query.genre");
   console.log(typeof req.query.genre, "TYPEOF req.query.genre");
+  let value = decodeURIComponent(req.query.genre);
+  console.log(req.query.genre, "stringgenre");
+  console.log("testtttt", value);
 
   if (req.method === "GET") {
     try {
