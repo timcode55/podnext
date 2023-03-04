@@ -1,13 +1,13 @@
 // import PodCard from "../../components/podCard";
 import axios from "axios";
-import { MongoClient } from "mongodb";
+// import { MongoClient } from "mongodb";
 
 // import NextCors from "nextjs-cors";
 
 // import Rating from "../../helpers/mongoose/rating.model";
 // const { Client } = require("podcast-api");
 
-import { connectToDatabase } from "../../helpers/database/mongodb";
+import { connectToDatabase, getClient } from "../../helpers/database/mongodb";
 
 export default async function handler(req, res) {
   // let mongoClient;
@@ -30,7 +30,7 @@ export default async function handler(req, res) {
   if (req.method === "GET") {
     let mongoClient;
     try {
-      mongoClient = await connectToDatabase();
+      mongoClient = getClient() || (await connectToDatabase());
     } catch (error) {
       return res.status(401).json({
         message: "Sorry, DB is not working",
@@ -40,8 +40,8 @@ export default async function handler(req, res) {
       // mongoClient = await connectToDatabase();
       // const client = await MongoClient.connect(process.env.MONGODB_URI);
       const db = mongoClient.db();
-
       const getTopPods = db.collection("ratings");
+
       const response = await axios.get(
         `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${categoryId}&page=${page}&region=us&safe_mode=0`,
         {

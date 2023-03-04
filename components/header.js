@@ -56,23 +56,8 @@ const Header = (props) => {
           response.data.data,
           "RESPONSE.DATA IN HEADER FOR GETPODCASTSBYCATEGORY"
         );
-        // for (let pod of response.data.data.podcasts) {
-        // try {
-        // const podcast = Rating.findOne({ id: pod.id }).lean();
-        // console.log(podcast, "PODCAST**************");
-        // pod["rating"] = response.data.rating;
-        //     pod["numberOfRatings"] = response.data.numberOfRatings || "N/A";
-        //     pod["itunes"] = response.data.itunes;
-        // } catch (e) {
-        // console.log(e, "error");
-        // }
       });
   }
-  // const data = await response.data;
-  // console.log(data, "DATA FOR ONCHANGE GETNEWPODCASTS");
-
-  // Pass data to the page via props
-  // return data;
 
   useEffect(() => {
     const getRating = async () => {
@@ -100,10 +85,7 @@ const Header = (props) => {
           });
         console.log(pod, "POD AFTER UPDATE FOR RATINGS");
       }
-      // console.log(getRating, "GETRATING RESULTS FROM DB");
-      // await setPodcastRatings([props.data.podcasts]);
     };
-    // getRating();
   }, [podcasts]);
 
   useEffect(() => {
@@ -174,9 +156,7 @@ const Header = (props) => {
             </form>
           </div>
         </div>
-        <div className={classes.filterWrapper}>
-          {/* <Filter handleClick={handleClick} /> */}
-        </div>
+        <div className={classes.filterWrapper}></div>
       </div>
       <PodList
         podcasts={podcasts}

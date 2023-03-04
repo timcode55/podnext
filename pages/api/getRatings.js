@@ -1,13 +1,13 @@
 // export default function handler(req, res) {
 //   res.status(200).json({ name: "John Doe" });
 // }
-
-import { MongoClient } from "mongodb";
+import { connectToDatabase, getClient } from "../../helpers/database/mongodb";
+// import { MongoClient } from "mongodb";
 // import { connectToDatabase } from "../../lib/mongodb";
 
 // import Rating from "../../models/Rating";
 
-import { connectToDatabase } from "../../helpers/database/mongodb";
+// import { connectToDatabase } from "../../helpers/database/mongodb";
 
 export default async function handler(req, res) {
   // const { db } = await connectToDatabase();
@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   // const client = await MongoClient.connect(process.env.NEXT_PUBLIC_DATABASE);
   let mongoClient;
   try {
-    mongoClient = await connectToDatabase();
+    mongoClient = getClient() || (await connectToDatabase());
   } catch (error) {
     res.status(500).json({ message: "Could not connect to the DB" });
     return;

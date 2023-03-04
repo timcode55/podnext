@@ -1,4 +1,5 @@
-import { MongoClient } from "mongodb";
+// import { MongoClient } from "mongodb";
+import { connectToDatabase, getClient } from "../../helpers/database/mongodb";
 
 export default async function handler(req, res) {
   console.log(req.method, "REQ.METHOD");
@@ -13,10 +14,15 @@ export default async function handler(req, res) {
   console.log("testtttt", value);
 
   if (req.method === "GET") {
+    let mongoClient;
     try {
-      const client = await MongoClient.connect(process.env.MONGODB_URI);
-      const db = client.db();
-
+      mongoClient = getClient() || (await connectToDatabase());
+    } catch (error) {
+      res.status(500).json({ message: "Could not connect to the DB" });
+      return;
+    }
+    try {
+      const db = mongoClient.db();
       const getTopPods = db.collection("ratings");
 
       const result = await getTopPods
@@ -29,14 +35,14 @@ export default async function handler(req, res) {
 
       console.log(result, "gettoppodcasts from Mongodb");
 
-      client.close();
+      // client.close();
 
       res
         .status(201)
         .json({ message: "Top Podcasts Successfully found", data: result });
     } catch (e) {
       res
-        .status(500)
+        .status(501)
         .json({ error: "There was an error getting the Top Podcasts" });
     }
   }

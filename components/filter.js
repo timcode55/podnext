@@ -3,11 +3,6 @@ import PodcastContext from "../store/podcastContext";
 import { categoriesArray } from "../utils/category-list";
 import { useState, useContext } from "react";
 import axios from "axios";
-// import { connectToDatabase } from "../utils/mongodb";
-
-// import Rating from "../db/Rating";
-// import connectDB from "../db/mongoose";
-// import { Rating } from "../models/Rating";
 
 const Filter = (props) => {
   console.log(props, "PROPS IN FILTER FROM GSSP");
@@ -18,19 +13,6 @@ const Filter = (props) => {
   const [loader, setLoader] = useState(true);
   const podcastCtx = useContext(PodcastContext);
   console.log(podcastCtx, "PODCASTCTX IN FILTER");
-
-  const handleChange = (e) => {
-    setValue(e.target.value);
-    let findValue = Number(e.target.value);
-    let findCategoryName = categoriesArray.find(
-      (item) => item.id === findValue
-    ).name;
-    let findCategoryId = categoriesArray.find(
-      (item) => item.id === findValue
-    ).id;
-    setCategory(findCategoryName, findCategoryId);
-    podcastCtx.setCategory(findCategoryName, findCategoryId);
-  };
 
   const handleRatingInput = (e) => {
     e.preventDefault();
@@ -47,11 +29,6 @@ const Filter = (props) => {
     e.preventDefault();
     console.log(e.target.value, "VALUE IN SELECT BOX IN GENRE 71**");
     setGenre(e.target.value);
-    // if (!e.target.value) {
-    //   podcastCtx.setGenre("AI & Data Science");
-    // } else {
-    //   podcastCtx.setGenre(e.target.value);
-    // }
   };
 
   const handleClick = async (e) => {
@@ -61,85 +38,29 @@ const Filter = (props) => {
     let stringGenre = encodeURIComponent(genre);
     console.log(stringGenre, "stringGenre");
     e.preventDefault();
-    const topPods = axios.get(
-      `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${stringGenre}`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    console.log(topPods, "TOPPODS");
-    const data = await topPods;
 
-    console.log(data, "data from api call");
-
-    let result = data.data.data.sort((a, b) => {
-      return b.rating - a.rating;
-    });
-    console.log(result, "RESULT in Filter after sort");
-    setNumberRatings("");
-    setRating("");
-    // response.data,
-
-    // setTopPodcasts(response.data);
-    podcastCtx.setRecommend(result);
-    podcastCtx.setRecentUpdate("recommend");
-    // setRating("");
-    // setNumberRatings("");
-
-    // connectToDatabase();
-    // await axios
-    //   .post(
-    //     `http://localhost:8000/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
-    //     {
-    //       body: {
-    //         todo: { rating },
-    //       },
-    //     }
-    //   )
-    //   .then(function (response) {
-    //     const recommendedPodcasts = response.data.sort((a, b) =>
-    //       a.rating > b.rating ? 1 : -1
-    //     );
-    //     console.log(
-    //       response.data.sort((a, b) => (a.rating > b.rating ? 1 : -1)),
-    //       "*********************response.data 29 in Header"
-    //     );
-    //     podcastCtx.setRecommend(recommendedPodcasts);
-    //     setRating("");
-    //     setNumberRatings("");
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //   });
-    // async function addTest(req, res) {
-    //   try {
-    //     console.log("CONNECTING TO MONGO");
-    //     await clientPromise;
-    //     console.log("CONNECTED TO MONGO");
-
-    //     console.log("CREATING DOCUMENT");
-    //     const test = await Test.create(req.body);
-    //     console.log("CREATED DOCUMENT");
-
-    //     res.json({ test });
-    //   } catch (error) {
-    //     console.log(error);
-    //     res.json({ error });
-    //   }
-    // }
-
-    // addTest();
-    // const topPodcasts = await Rating.find({
-    //   rating: { $gte: rating },
-    //   numberOfRatings: { $gte: numberRatings },
-    //   listenNotesGenre: genre,
-    //   // genre
-    // }).lean();
-
-    // console.log(topPodcasts, "TOPPODCASTS FROM DB IN FILTER*****");
+    try {
+      const topPods = await axios.get(
+        `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${stringGenre}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(topPods, "topPods");
+      const result = topPods.data.data.sort((a, b) => {
+        return b.rating - a.rating;
+      });
+      console.log(result, "RESULT in Filter after sort");
+      setNumberRatings("");
+      setRating("");
+      podcastCtx.setRecommend(result);
+      podcastCtx.setRecentUpdate("recommend");
+    } catch (error) {
+      console.error(error);
+    }
   };
   return (
     <div className={classes.filterContainer}>
