@@ -85,6 +85,7 @@ const Filter = (props) => {
 
     // setTopPodcasts(response.data);
     podcastCtx.setRecommend(result);
+    podcastCtx.setRecentUpdate("recommend");
     // setRating("");
     // setNumberRatings("");
 

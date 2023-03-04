@@ -1,12 +1,14 @@
 import { useContext, useState } from "react";
 import PodcastContext from "../../store/podcastContext";
 import Header from "../../components/header";
+import Filter from "../../components/filter";
 import classes from "./podcasts.module.css";
 import axios from "axios";
 import { connectToDatabase } from "../../helpers/database/mongodb";
 
 function Podcasts(props) {
   const podcastCtx = useContext(PodcastContext);
+  console.log(podcastCtx.recommend, "podcastCtx.recommend");
 
   return (
     <div className={classes.mainContainer}>
@@ -18,6 +20,7 @@ function Podcasts(props) {
           instructions.
         </h2>
       )}
+      <Filter podcasts={podcastCtx.recommend} />
       <Header podcasts={props?.finalArray} />
     </div>
   );

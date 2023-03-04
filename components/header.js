@@ -22,6 +22,7 @@ const Header = (props) => {
   const [loader, setLoader] = useState(true);
   const [dbCategories, setDbCategories] = useState([]);
   const podcastCtx = useContext(PodcastContext);
+  const [mostRecentUpdate, setMostRecentUpdate] = useState(null);
   // console.log(podcastCtx, "PODCASTCTX IN HEADER");
   //   const [state, setState] = useContext(PodcastContext);
 
@@ -50,6 +51,7 @@ const Header = (props) => {
       .then((response) => {
         setPodcasts(response.data.data);
         podcastCtx.setPodcasts(response.data.data);
+        podcastCtx.setRecentUpdate("podcasts");
         console.log(
           response.data.data,
           "RESPONSE.DATA IN HEADER FOR GETPODCASTSBYCATEGORY"
@@ -103,6 +105,16 @@ const Header = (props) => {
     };
     // getRating();
   }, [podcasts]);
+
+  useEffect(() => {
+    if (podcastCtx.recommend && mostRecentUpdate !== "recommend") {
+      setPodcasts(podcastCtx.recommend);
+      setMostRecentUpdate("recommend");
+    } else if (podcastCtx.podcasts && mostRecentUpdate !== "podcasts") {
+      setPodcasts(podcastCtx.podcasts);
+      setMostRecentUpdate("podcasts");
+    }
+  }, [podcastCtx.recommend, podcastCtx.podcasts]);
 
   return (
     <div>
