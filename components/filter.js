@@ -61,30 +61,31 @@ const Filter = (props) => {
     let stringGenre = encodeURIComponent(genre);
     console.log(stringGenre, "stringGenre");
     e.preventDefault();
-    axios
-      .get(
-        `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
-        {
-          body: {
-            todo: { rating },
-          },
-        }
-      )
-      .then(function (response) {
-        let result = response.data.data.sort((a, b) =>
-          a.rating > b.rating ? 1 : -1
-        );
-        console.log(result, "RESULT");
-        // response.data,
+    const topPods = axios.get(
+      `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${genre}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(topPods, "TOPPODS");
+    const data = await topPods;
 
-        // setTopPodcasts(response.data);
-        podcastCtx.setRecommend(result);
-        // setRating("");
-        // setNumberRatings("");
-      })
-      .catch(function (error) {
-        console.log(error, "ERROR IN FILTER.JS");
-      });
+    console.log(data, "data from api call");
+
+    let result = data.data.data.sort((a, b) => {
+      a.rating > b.rating ? 1 : -1;
+    });
+    console.log(result, "RESULT");
+    // response.data,
+
+    // setTopPodcasts(response.data);
+    podcastCtx.setRecommend(result);
+    // setRating("");
+    // setNumberRatings("");
+
     // connectToDatabase();
     // await axios
     //   .post(

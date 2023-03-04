@@ -3,11 +3,8 @@ import PodCard from "./podCard";
 import classes from "./podList.module.css";
 import PodcastContext from "../store/podcastContext";
 
-// import Arrow from "../arrow/Arrow";
-
 const PodList = (props) => {
   const [podcasts, setPodcasts] = useState(props.podcasts);
-  console.log(props, "props in podlist");
   const PodcastCtx = useContext(PodcastContext);
   console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
   // console.log(props, "props in podlist");

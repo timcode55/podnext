@@ -6,20 +6,23 @@ import PodcastContext from "../store/podcastContext";
 import classes from "./header.module.css";
 import axios from "axios";
 
+// import { clientPromise } from "../lib/mongodb";
+// import Rating from "../db/Rating";
+
 const Header = (props) => {
-  console.log(props, "props in header");
+  // console.log(props, "props in header");
   const [state, setState] = useContext(PodcastContext);
   const [value, setValue] = useState("");
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
   // const [podcasts, setPodcasts] = useState(props.podcasts.data.podcasts);
-  const [podcasts, setPodcasts] = useState(null);
+  const [podcasts, setPodcasts] = useState(props.podcasts);
   const [genre, setGenre] = useState("AI & Data Science");
   const [loader, setLoader] = useState(true);
   const [dbCategories, setDbCategories] = useState([]);
   const podcastCtx = useContext(PodcastContext);
-  console.log(podcastCtx, "PODCASTCTX IN HEADER");
+  // console.log(podcastCtx, "PODCASTCTX IN HEADER");
   //   const [state, setState] = useContext(PodcastContext);
 
   const handleChange = (e) => {
@@ -32,29 +35,74 @@ const Header = (props) => {
     let categoryId = categoriesArray.find((item) => item.id === findValue).id;
     setCategory(categoryName, categoryId);
     podcastCtx.setCategory(categoryName, categoryId);
-    getNewPodcasts(categoryId);
+    getNewPodcasts(categoryId, 1);
+    // console.log(podcasts, "PODCASTS FULL LIST");
   };
 
-  async function getNewPodcasts(categoryId) {
-    const response = await fetch(
-      `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${categoryId}&page=${1}&region=us&safe_mode=0`,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          "X-ListenAPI-Key": process.env.NEXT_PUBLIC_LISTEN_NOTES_API_KEY,
+  async function getNewPodcasts(categoryId, page) {
+    console.log(categoryId, page, "categoryid, page");
+    axios
+      .get(`/api/getPodcastsByCategory?categoryId=${categoryId}&page=${page}`, {
+        body: {
+          todo: { rating },
         },
-        credentials: "same-origin",
-      }
-    );
-    const data = await response.json();
-    console.log(data, "DATA IN select box change");
-    podcastCtx.setPodcasts(data.podcasts);
-    setPodcasts(data.podcasts);
-
-    // Pass data to the page via props
-    return data;
+      })
+      .then((response) => {
+        setPodcasts(response.data.data);
+        podcastCtx.setPodcasts(response.data.data);
+        console.log(
+          response.data.data,
+          "RESPONSE.DATA IN HEADER FOR GETPODCASTSBYCATEGORY"
+        );
+        // for (let pod of response.data.data.podcasts) {
+        // try {
+        // const podcast = Rating.findOne({ id: pod.id }).lean();
+        // console.log(podcast, "PODCAST**************");
+        // pod["rating"] = response.data.rating;
+        //     pod["numberOfRatings"] = response.data.numberOfRatings || "N/A";
+        //     pod["itunes"] = response.data.itunes;
+        // } catch (e) {
+        // console.log(e, "error");
+        // }
+      });
   }
+  // const data = await response.data;
+  // console.log(data, "DATA FOR ONCHANGE GETNEWPODCASTS");
+
+  // Pass data to the page via props
+  // return data;
+
+  useEffect(() => {
+    const getRating = async () => {
+      console.log(podcasts, "ARE THE PODCASTS THE RIGHT ONES?");
+      for (let pod of podcasts) {
+        const id = pod.id;
+        console.log(id, "ID IN GETRATING");
+        await axios
+          .get(`/api/getRatings/?id=${id}`)
+          .then(function (response) {
+            console.log(response.data.data.rating, "RESPONSE8888*******");
+            pod["rating"] = response.data.data.rating;
+            pod["numberOfRatings"] =
+              response.data.data.numberOfRatings || "N/A";
+            pod["itunes"] = response.data.data.itunes;
+            // pod['description'] = response.data.description;
+            console.log(
+              response.data.data.rating,
+              "RESPONSE.DATA IN INDEX.JS****"
+            );
+          })
+          .then((data) => console.log(data, "DATA IN AXIOS INDEX.JS"))
+          .catch(function (error) {
+            console.log(error);
+          });
+        console.log(pod, "POD AFTER UPDATE FOR RATINGS");
+      }
+      // console.log(getRating, "GETRATING RESULTS FROM DB");
+      // await setPodcastRatings([props.data.podcasts]);
+    };
+    // getRating();
+  }, [podcasts]);
 
   return (
     <div>
