@@ -26,44 +26,6 @@ function Podcasts(props) {
   );
 }
 
-// export async function getStaticProps() {
-//   let mongoClient;
-//   try {
-//     mongoClient = await connectToDatabase();
-//   } catch (error) {
-//     return res.status(401).json({
-//       message: "Sorry, DB is not working",
-//     });
-//   }
-//   try {
-//     const db = mongoClient.db();
-//     const getTopPods = db.collection("ratings");
-//     const response = await axios.get(
-//       `https://listen-api.listennotes.com/api/v2/best_podcasts?genre_id=${67}&page=${1}&region=us&safe_mode=0`,
-//       {
-//         headers: {
-//           "X-ListenAPI-Key": process.env.NEXT_PUBLIC_LISTEN_NOTES_API_KEY,
-//         },
-//       }
-//     );
-//     console.log("testing", "TEST LET IT WORK");
-//     const finalArray = [];
-//     for (const pod of response.data.podcasts) {
-//       const result = await getTopPods.findOne({ id: pod.id });
-//       console.log(JSON.parse(JSON.stringify(result)), "RESULT FROM DB");
-//       pod.rating = result?.rating ?? null;
-//       pod.numberOfRatings = result?.numberOfRatings ?? null;
-//       finalArray.push(pod);
-//     }
-//     return {
-//       props: { isConnected: true, finalArray },
-//     };
-//   } catch (error) {
-//     console.log(error, "error");
-//     return { props: { isConnected: false } };
-//   }
-// }
-
 export async function getStaticProps() {
   let mongoClient;
   try {

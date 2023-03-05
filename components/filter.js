@@ -32,14 +32,13 @@ const Filter = (props) => {
   };
 
   const handleClick = async (e) => {
+    e.preventDefault();
     console.log(rating, "rating on click");
     console.log(genre, "genre on click");
     console.log(numberRatings, "numberRatings on click");
-    let stringGenre = encodeURIComponent(genre);
-    console.log(stringGenre, "stringGenre");
-    e.preventDefault();
 
     try {
+      const stringGenre = encodeURIComponent(genre);
       const topPods = await axios.get(
         `/api/getTopPodcasts?rating=${rating}&numberRatings=${numberRatings}&genre=${stringGenre}`,
         {

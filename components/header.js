@@ -6,9 +6,6 @@ import PodcastContext from "../store/podcastContext";
 import classes from "./header.module.css";
 import axios from "axios";
 
-// import { clientPromise } from "../lib/mongodb";
-// import Rating from "../db/Rating";
-
 const Header = (props) => {
   // console.log(props, "props in header");
   const [state, setState] = useContext(PodcastContext);
@@ -16,19 +13,15 @@ const Header = (props) => {
   const [category, setCategory] = useState("");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
-  // const [podcasts, setPodcasts] = useState(props.podcasts.data.podcasts);
   const [podcasts, setPodcasts] = useState(props.podcasts);
   const [genre, setGenre] = useState("AI & Data Science");
-  const [loader, setLoader] = useState(true);
+  const [loader, setLoader] = useState(false);
   const [dbCategories, setDbCategories] = useState([]);
   const podcastCtx = useContext(PodcastContext);
-  const [mostRecentUpdate, setMostRecentUpdate] = useState(null);
-  // console.log(podcastCtx, "PODCASTCTX IN HEADER");
-  //   const [state, setState] = useContext(PodcastContext);
+  const [mostRecentUpdate, setMostRecentUpdate] = useState("podcasts");
 
   const handleChange = (e) => {
     setValue(e.target.value);
-    // setState({ page: 1, category: e.target.value });
     let findValue = Number(e.target.value);
     let categoryName = categoriesArray.find(
       (item) => item.id === findValue
@@ -37,10 +30,10 @@ const Header = (props) => {
     setCategory(categoryName, categoryId);
     podcastCtx.setCategory(categoryName, categoryId);
     getNewPodcasts(categoryId, 1);
-    // console.log(podcasts, "PODCASTS FULL LIST");
   };
 
   async function getNewPodcasts(categoryId, page) {
+    setLoader(true);
     console.log(categoryId, page, "categoryid, page");
     axios
       .get(`/api/getPodcastsByCategory?categoryId=${categoryId}&page=${page}`, {
@@ -57,6 +50,7 @@ const Header = (props) => {
           "RESPONSE.DATA IN HEADER FOR GETPODCASTSBYCATEGORY"
         );
       });
+    setLoader(false);
   }
 
   useEffect(() => {
@@ -158,13 +152,17 @@ const Header = (props) => {
         </div>
         <div className={classes.filterWrapper}></div>
       </div>
-      <PodList
-        podcasts={podcasts}
-        category={parseInt(value)}
-        getData={props.getApiData}
-        status={props.status}
-        cache={props.cache}
-      />
+      {loader ? (
+        "....loading"
+      ) : (
+        <PodList
+          podcasts={podcasts}
+          category={parseInt(value)}
+          getData={props.getApiData}
+          status={props.status}
+          cache={props.cache}
+        />
+      )}
     </div>
   );
 };
