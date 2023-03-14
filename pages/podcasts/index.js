@@ -8,18 +8,18 @@ import { connectToDatabase, getClient } from "../../helpers/database/mongodb";
 
 function Podcasts(props) {
   const podcastCtx = useContext(PodcastContext);
-  console.log(podcastCtx.recommend, "podcastCtx.recommend");
+  // console.log(podcastCtx.recommend, "podcastCtx.recommend");
 
   return (
     <div className={classes.mainContainer}>
-      {props.isConnected ? (
+      {/* {props.isConnected ? (
         <h2 className="subtitle">You are connected to MongoDB</h2>
       ) : (
         <h2 className="subtitle">
           You are NOT connected to MongoDB. Check the <code>README.md</code> for
           instructions.
         </h2>
-      )}
+      )} */}
       <Filter podcasts={podcastCtx.recommend} />
       <Header podcasts={props?.finalArray} />
     </div>
@@ -49,11 +49,10 @@ export async function getStaticProps() {
         },
       }
     );
-    console.log("testing", "TEST LET IT WORK");
     const finalArray = [];
     for (const pod of response.data.podcasts) {
       const result = await getTopPods.findOne({ id: pod.id });
-      console.log(JSON.parse(JSON.stringify(result)), "RESULT FROM DB");
+      // console.log(JSON.parse(JSON.stringify(result)), "RESULT FROM DB");
       pod.rating = result?.rating ?? null;
       pod.numberOfRatings = result?.numberOfRatings ?? null;
       finalArray.push(pod);

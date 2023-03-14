@@ -5,14 +5,13 @@ import { useState, useContext } from "react";
 import axios from "axios";
 
 const Filter = (props) => {
-  console.log(props, "PROPS IN FILTER FROM GSSP");
   const [rating, setRating] = useState("");
   const [numberRatings, setNumberRatings] = useState("");
   const [topPodcasts, setTopPodcasts] = useState(null);
   const [genre, setGenre] = useState("AI & Data Science");
   const [loader, setLoader] = useState(true);
   const podcastCtx = useContext(PodcastContext);
-  console.log(podcastCtx, "PODCASTCTX IN FILTER");
+  // console.log(podcastCtx, "PODCASTCTX IN FILTER");
 
   const handleRatingInput = (e) => {
     e.preventDefault();
@@ -48,7 +47,7 @@ const Filter = (props) => {
           },
         }
       );
-      console.log(topPods, "topPods");
+      // console.log(topPods, "topPods");
       const result = topPods.data.data.sort((a, b) => {
         return b.rating - a.rating;
       });
