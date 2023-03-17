@@ -4,7 +4,7 @@ import { connectToDatabase, getClient } from "../../helpers/database/mongodb";
 export default async function handler(req, res) {
   const categoryId = req.query.categoryId;
   const page = req.query.page;
-  console.log(categoryId, page, req.method, "handler values");
+  // console.log(categoryId, page, req.method, "handler values");
 
   if (req.method === "GET") {
     let mongoClient;
@@ -35,14 +35,15 @@ export default async function handler(req, res) {
         if (result.length > 0) {
           pod.rating = result[0].rating;
           pod.numberOfRatings = result[0].numberOfRatings;
+          pod.itunes = result[0].itunes;
         } else {
           pod.rating = null;
           pod.numberOfRatings = null;
+          pod.itunes = null;
         }
 
         finalArray.push(pod);
       }
-
       res.status(200).json({ data: finalArray });
     } catch (err) {
       res.status(401).json({ message: "Shit did not work" });

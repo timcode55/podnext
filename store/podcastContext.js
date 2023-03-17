@@ -10,7 +10,7 @@ export function PodcastContextProvider(props) {
   const [podcasts, setPodcasts] = useState([]);
   const [category, setCategory] = useState(null);
   const [recommend, setRecommend] = useState(null);
-  const [loader, setLoader] = useState(null);
+  const [loader, setLoader] = useState(false);
   const [rating, setRating] = useState(null);
   const [numberRatings, setNumberRatings] = useState(null);
   const [genre, setGenre] = useState(null);
@@ -25,8 +25,8 @@ export function PodcastContextProvider(props) {
     setPodcasts(podcasts);
   }
 
-  function setLoaderHandler(isLoading) {
-    setLoader(isLoading);
+  function setLoaderHandler(loader) {
+    setLoader(loader);
   }
 
   function setRecommendHandler(podcasts) {
@@ -56,8 +56,9 @@ export function PodcastContextProvider(props) {
     numberRatings,
     genre,
     recent,
+    loader: loader,
     setCategory: setCategoryHandler,
-    showLoader: setLoaderHandler,
+    setLoader: setLoaderHandler,
     setPodcasts: setPodcastsHandler,
     setRecommend: setRecommendHandler,
     setRating: setRatingHandler,

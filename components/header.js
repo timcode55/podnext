@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import PodList from "./podList";
-import Filter from "./filter";
 import { array1, array2, categoriesArray } from "../utils/category-list";
 import PodcastContext from "../store/podcastContext";
 import classes from "./header.module.css";
@@ -17,8 +16,8 @@ const Header = (props) => {
   const [genre, setGenre] = useState("AI & Data Science");
   const [loader, setLoader] = useState(false);
   const [dbCategories, setDbCategories] = useState([]);
-  const podcastCtx = useContext(PodcastContext);
   const [mostRecentUpdate, setMostRecentUpdate] = useState("podcasts");
+  const podcastCtx = useContext(PodcastContext);
 
   const handleChange = (e) => {
     setValue(e.target.value);
@@ -33,7 +32,7 @@ const Header = (props) => {
   };
 
   async function getNewPodcasts(categoryId, page) {
-    setLoader(true);
+    podcastCtx.setLoader(true);
     console.log(categoryId, page, "categoryid, page");
     axios
       .get(`/api/getPodcastsByCategory?categoryId=${categoryId}&page=${page}`, {
@@ -49,8 +48,8 @@ const Header = (props) => {
           response.data.data,
           "RESPONSE.DATA IN HEADER FOR GETPODCASTSBYCATEGORY"
         );
+        podcastCtx.setLoader(false);
       });
-    setLoader(false);
   }
 
   useEffect(() => {

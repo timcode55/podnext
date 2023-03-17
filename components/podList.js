@@ -6,20 +6,31 @@ import PodcastContext from "../store/podcastContext";
 const PodList = (props) => {
   const [podcasts, setPodcasts] = useState(props.podcasts);
   const PodcastCtx = useContext(PodcastContext);
-  // console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
+  console.log(PodcastCtx, "PODCASTCTX IN PODLIST");
+  console.log(PodcastCtx.loader, "loader - isLoading?");
   return (
     <div className={classes.outerContainer}>
-      <div className={classes.container}>
-        <div className={classes.podcastDisplay}>
-          {props.podcasts &&
-            props.podcasts.map((pod) => (
-              <div key={pod.id}>
-                <PodCard key={pod.id} podcast={pod} />
-              </div>
-            ))}
+      {PodcastCtx.loader ? (
+        <div className={classes.loadContainer}>
+          <div className={classes.loader}>
+            <div className={`${classes.inner} ${classes.one}`}></div>
+            <div className={`${classes.inner} ${classes.two}`}></div>
+            <div className={`${classes.inner} ${classes.three}`}></div>
+          </div>
         </div>
-      </div>
-      {props.status === "loaded" ? <Arrow getData={props.getData} /> : null}
+      ) : (
+        <div className={classes.container}>
+          <div className={classes.podcastDisplay}>
+            {props.podcasts &&
+              props.podcasts.map((pod) => (
+                <div key={pod.id}>
+                  <PodCard key={pod.id} podcast={pod} />
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
+      {/* {props.status === "loaded" ? <Arrow getData={props.getData} /> : null} */}
     </div>
   );
 };
