@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import PodCard from "./podCard";
 import classes from "./podList.module.css";
+import Arrow from "./arrow";
 import PodcastContext from "../store/podcastContext";
 
 const PodList = (props) => {
@@ -30,7 +31,7 @@ const PodList = (props) => {
           </div>
         </div>
       )}
-      {/* {props.status === "loaded" ? <Arrow getData={props.getData} /> : null} */}
+      {!PodcastCtx.loader ? <Arrow /> : null}
     </div>
   );
 };
