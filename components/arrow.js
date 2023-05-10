@@ -1,17 +1,16 @@
 import arrow from "./arrow.module.css";
-import PodcastContext from "../store/podcastContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCaretSquareLeft,
   faCaretSquareRight,
-} from "@fortawesome/fontawesome-free-solid";
+} from "@fortawesome/free-solid-svg-icons";
 
 const Arrow = (props) => {
   return (
     <div className={arrow.page}>
-      <FontAwesomeIcon icon="caret-square-left" className={arrow.arrow_left} />
+      <FontAwesomeIcon icon={faCaretSquareLeft} className={arrow.arrow_left} />
       <FontAwesomeIcon
-        icon="caret-square-right"
+        icon={faCaretSquareRight}
         className={arrow.arrow_right}
       />
     </div>
