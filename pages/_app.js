@@ -1,6 +1,5 @@
 import { PodcastContextProvider } from "../store/podcastContext";
 import "../styles/globals.css";
-import axios from "axios";
 
 import Head from "next/head";
 
