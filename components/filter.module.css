@@ -1,13 +1,15 @@
 .filterContainer {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
+  /* align-items: center; */
+  padding: 60px;
 }
 
 .formWrapper {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 80vw;
+  width: 50vw;
   text-align: center;
 }
 
@@ -17,4 +19,10 @@
   height: 25px;
   border-radius: 5px;
   align-self: flex-end;
+}
+
+.title {
+  font-family: "Montserrat", sans-serif;
+  font-weight: 400;
+  font-size: 2.5em;
 }

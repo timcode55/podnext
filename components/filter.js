@@ -64,6 +64,10 @@ const Filter = (props) => {
   };
   return (
     <div className={classes.filterContainer}>
+      <h1 className={classes.title}>
+        SEARCH BY RATING
+        {/* {category.toUpperCase() || "most popular".toUpperCase()} */}
+      </h1>
       <form className={classes.formWrapper}>
         <div className={classes.formItem}>
           <label>
