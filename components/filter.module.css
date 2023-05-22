@@ -3,26 +3,37 @@
   justify-content: space-around;
   /* align-items: center; */
   padding: 60px;
+  background-color: #3453ad;
 }
 
 .formWrapper {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 50vw;
+  justify-content: space-around;
+  align-items: baseline;
+  width: 60vw;
   text-align: center;
+  background-color: #c4c2c2;
+  margin-bottom: -110px;
+  border-radius: 10px;
 }
 
 .filterButton {
   background: rgb(213, 211, 211);
-  width: 100px;
-  height: 25px;
+  width: 120px;
+  height: 50px;
   border-radius: 5px;
   align-self: flex-end;
+  background-color: blueviolet;
+  color: white;
+  cursor: pointer;
 }
 
 .title {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
   font-size: 2.5em;
+}
+
+.buttonWrapper {
+  align-self: end;
 }

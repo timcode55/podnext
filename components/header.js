@@ -53,43 +53,14 @@ const Header = (props) => {
   }
 
   useEffect(() => {
-    const getRating = async () => {
-      console.log(podcasts, "ARE THE PODCASTS THE RIGHT ONES?");
-      for (let pod of podcasts) {
-        const id = pod.id;
-        console.log(id, "ID IN GETRATING");
-        await axios
-          .get(`/api/getRatings/?id=${id}`)
-          .then(function (response) {
-            console.log(response.data.data.rating, "RESPONSE8888*******");
-            pod["rating"] = response.data.data.rating;
-            pod["numberOfRatings"] =
-              response.data.data.numberOfRatings || "N/A";
-            pod["itunes"] = response.data.data.itunes;
-            // pod['description'] = response.data.description;
-            console.log(
-              response.data.data.rating,
-              "RESPONSE.DATA IN INDEX.JS****"
-            );
-          })
-          .then((data) => console.log(data, "DATA IN AXIOS INDEX.JS"))
-          .catch(function (error) {
-            console.log(error);
-          });
-        console.log(pod, "POD AFTER UPDATE FOR RATINGS");
-      }
-    };
-  }, [podcasts]);
-
-  useEffect(() => {
-    if (podcastCtx.recommend && mostRecentUpdate !== "recommend") {
+    if (podcastCtx.recent === "recommend") {
       setPodcasts(podcastCtx.recommend);
       setMostRecentUpdate("recommend");
-    } else if (podcastCtx.podcasts && mostRecentUpdate !== "podcasts") {
+    } else if (podcastCtx.recent === "podcasts") {
       setPodcasts(podcastCtx.podcasts);
       setMostRecentUpdate("podcasts");
     }
-  }, [podcastCtx.recommend, podcastCtx.podcasts]);
+  }, [podcastCtx.recommend, podcastCtx.podcasts, podcastCtx.recent]);
 
   return (
     <div>
