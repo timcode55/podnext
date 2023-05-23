@@ -4,6 +4,7 @@ import { categoriesArray } from "../utils/category-list";
 import { useState, useContext } from "react";
 import axios from "axios";
 import { filterNumberRatings } from "../utils/filterNumberRatings";
+import { ratings } from "../utils/ratings";
 
 const Filter = (props) => {
   const [rating, setRating] = useState("");
@@ -17,6 +18,7 @@ const Filter = (props) => {
 
   const handleRatingInput = (e) => {
     e.preventDefault();
+    console.log(e.target.value, "VALUE IN SELECT BOX IN RATING 71**");
     setRating(e.target.value);
     // podcastCtx.setRating(e.target.value);
   };
@@ -78,23 +80,29 @@ const Filter = (props) => {
           {/* {category.toUpperCase() || "most popular".toUpperCase()} */}
         </h1>
         <form className={classes.formWrapper}>
-          <div className={classes.formItem}>
+          <div className={classes.filterSelection}>
             <label>
               <p>Enter Min Rating</p>
-              <input
-                className={classes.filterInput}
-                type="text"
-                name="rating"
-                value={rating}
+              <select
+                className="selection"
+                name="scripts"
                 onChange={handleRatingInput}
-              />
+              >
+                {ratings.map((item) => {
+                  return (
+                    <option key={item.id} value={item.value}>
+                      {item.name}
+                    </option>
+                  );
+                })}
+              </select>
             </label>
           </div>
-          <div className={classes.formItem}>
+          <div className={classes.filterSelection}>
             <label>
               <p>Enter # of Ratings</p>
               <select
-                id="selection"
+                className="selection"
                 name="scripts"
                 onChange={handleNumRatingsInput}
               >
@@ -111,7 +119,11 @@ const Filter = (props) => {
           <div className={classes.filterSelection}>
             <label>
               <p>Genre</p>
-              <select id="selection" name="scripts" onChange={handleGenreInput}>
+              <select
+                className="selection"
+                name="scripts"
+                onChange={handleGenreInput}
+              >
                 {categoriesArray.map((item) => {
                   return (
                     <option key={item.id} value={item.name}>

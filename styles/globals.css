@@ -14,3 +14,10 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.selection {
+  background-color: white;
+  height: 30px;
+  font-size: 1em;
+  width: 190px;
+}

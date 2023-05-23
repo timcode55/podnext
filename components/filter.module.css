@@ -1,9 +1,8 @@
 .filterContainer {
   display: flex;
   justify-content: space-around;
-  /* align-items: center; */
   padding: 60px;
-  background-color: #3453ad;
+  background-color: #445a9e;
 }
 
 .formWrapper {
@@ -31,9 +30,16 @@
 .title {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
-  font-size: 2.5em;
+  font-size: 1.5em;
+  text-align: center;
 }
 
 .buttonWrapper {
   align-self: end;
+}
+
+.selection {
+  background-color: white;
+  height: 30px;
+  font-size: 1em;
 }
